@@ -28,6 +28,7 @@
 - Caso não seja informado nenhum filtro, retornar  todos os dados de transferência.
 - Caso seja informado um período de tempo, retornar todas as transferências relacionadas à aquele período de tempo.
 - Caso seja informado o nome do operador da transação, retornar todas as transações relacionados à aquele operador.
+- Caso todos os filtros sejam informados, retornar todas as transações com base no período de tempo informado e o nome do operador.
 - Operador de transação nada mais é que, o nome do responsável de destino da transação caso seja uma operação de transferência de saida ou o nome do responsável de onde se originou a transação.
 
 
