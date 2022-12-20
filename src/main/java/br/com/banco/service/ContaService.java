@@ -3,14 +3,15 @@ package br.com.banco.service;
 import br.com.banco.exception.SaldoInsuficienteException;
 import br.com.banco.model.Conta;
 import br.com.banco.model.Transferencia;
+import br.com.banco.model.dto.ContaDTO;
 import br.com.banco.model.enums.Operacao;
 import br.com.banco.repository.ContaRepository;
-import br.com.banco.repository.TransferenciaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 public class ContaService {
@@ -19,7 +20,7 @@ public class ContaService {
     private ContaRepository contaRepository;
 
     @Autowired
-    private TransferenciaRepository transferenciaRepository;
+    private TransferenciaService transferenciaService;
 
 
     public void inserir(Conta conta) {
@@ -59,8 +60,8 @@ public class ContaService {
                 .valor(valor)
                 .build();
 
-        transferenciaRepository.save(transEntrada);
-        transferenciaRepository.save(transSaida);
+        transferenciaService.inserir(transEntrada);
+        transferenciaService.inserir(transSaida);
 
     }
 
@@ -77,7 +78,7 @@ public class ContaService {
                 .tipo(Operacao.SAQUE)
                 .conta(conta)
                 .build();
-        transferenciaRepository.save(transferencia);
+        transferenciaService.inserir(transferencia);
 
     }
 
@@ -89,11 +90,35 @@ public class ContaService {
         Transferencia transferencia = Transferencia.builder()
                 .dataTransferencia(LocalDate.now())
                 .valor(valor)
-                .tipo(Operacao.SAQUE)
+                .tipo(Operacao.DEPOSITO)
                 .conta(conta)
                 .build();
-        transferenciaRepository.save(transferencia);
+        transferenciaService.inserir(transferencia);
 
     }
 
+    public Conta fromDto(ContaDTO dto) {
+        return Conta.builder()
+                .email(dto.getEmail())
+                .agencia(dto.getAgencia())
+                .numero(dto.getNumero())
+                .nomeResponsavel(dto.getNome())
+                .dataDeCriacao(LocalDate.now())
+                .saldo(0.00)
+                .build();
+    }
+
+    public Conta findByContaNumero(Integer numero) {
+        Conta conta = contaRepository.findByNumero(numero);
+        return conta;
+    }
+
+    public Conta findById(Long id) {
+        Optional<Conta> op = contaRepository.findById(id);
+        if (op.isEmpty()) {
+            throw new RuntimeException("Conta de id: " + id + " não encontrada");
+        }
+
+        return op.get();
+    }
 }

@@ -2,6 +2,7 @@ package br.com.banco.model;
 
 import lombok.*;
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -19,12 +20,12 @@ public class Conta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "agencia")
+    @Column(name = "agencia", unique = true)
     @NotNull
     @Size(min = 1, max = 9999)
     private Integer agencia;
 
-    @Column(name = "numero")
+    @Column(name = "numero", unique = true)
     @NotNull
     @Size(min = 1111, max = 99999999)
     private Integer numero;
@@ -32,17 +33,22 @@ public class Conta {
     @Column(name = "nome_responsavel")
     private String nomeResponsavel;
 
+    @Column(name = "email")
+    @Email
+    private String email;
+
     @Column(name = "saldo", columnDefinition = "DECIMAL(20,2) DEFAULT 0.00")
     private Double saldo;
 
     @Column(name = "data_de_criacao")
     private LocalDate dataDeCriacao;
 
-    public Conta(String nomeResponsavel, int agencia, int conta) {
+    public Conta(String nomeResponsavel, int agencia, int conta, String email) {
         this.nomeResponsavel = nomeResponsavel;
         this.agencia = agencia;
         this.numero = conta;
         this.saldo = 0.00;
+        this.email = email;
         this.dataDeCriacao = LocalDate.now();
     }
 
