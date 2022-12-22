@@ -1,11 +1,12 @@
 package br.com.banco.model;
 
 import lombok.*;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "conta")
@@ -41,7 +42,7 @@ public class Conta {
     private Double saldo;
 
     @Column(name = "data_de_criacao")
-    private LocalDate dataDeCriacao;
+    private LocalDateTime dataDeCriacao;
 
     public Conta(String nomeResponsavel, int agencia, int conta, String email) {
         this.nomeResponsavel = nomeResponsavel;
@@ -49,7 +50,7 @@ public class Conta {
         this.numero = conta;
         this.saldo = 0.00;
         this.email = email;
-        this.dataDeCriacao = LocalDate.now();
+        this.dataDeCriacao = LocalDateTime.now();
     }
 
 }

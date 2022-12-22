@@ -1,13 +1,13 @@
 package br.com.banco.model;
 
 import br.com.banco.model.enums.Operacao;
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "transferencia")
@@ -22,13 +22,13 @@ public class Transferencia {
     private Long id;
 
     @Column(name = "data_transferencia")
-    private LocalDate dataTransferencia;
+    private LocalDateTime dataTransferencia;
 
     @Column(name = "valor", nullable = false, columnDefinition = "DECIMAL(20,2)")
     @NotNull
     private Double valor;
 
-    @Enumerated
+    @Enumerated(value = EnumType.STRING)
     @NotNull
     private Operacao tipo;
 

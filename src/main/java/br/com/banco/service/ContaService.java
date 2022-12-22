@@ -7,10 +7,12 @@ import br.com.banco.model.dto.ContaDTO;
 import br.com.banco.model.enums.Operacao;
 import br.com.banco.repository.ContaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
+import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -45,7 +47,7 @@ public class ContaService {
         contaRepository.save(destino);
 
         Transferencia transSaida = Transferencia.builder()
-                .dataTransferencia(LocalDate.now())
+                .dataTransferencia(LocalDateTime.now())
                 .tipo(Operacao.TRANSFERENCIA)
                 .nomeOperadorTransacao(destino.getNomeResponsavel())
                 .conta(origem)
@@ -53,7 +55,7 @@ public class ContaService {
                 .build();
 
         Transferencia transEntrada = Transferencia.builder()
-                .dataTransferencia(LocalDate.now())
+                .dataTransferencia(LocalDateTime.now())
                 .tipo(Operacao.TRANSFERENCIA)
                 .nomeOperadorTransacao(origem.getNomeResponsavel())
                 .conta(destino)
@@ -73,7 +75,7 @@ public class ContaService {
         contaRepository.save(conta);
 
         Transferencia transferencia = Transferencia.builder()
-                .dataTransferencia(LocalDate.now())
+                .dataTransferencia(LocalDateTime.now())
                 .valor(valor)
                 .tipo(Operacao.SAQUE)
                 .conta(conta)
@@ -88,7 +90,7 @@ public class ContaService {
         contaRepository.save(conta);
 
         Transferencia transferencia = Transferencia.builder()
-                .dataTransferencia(LocalDate.now())
+                .dataTransferencia(LocalDateTime.now())
                 .valor(valor)
                 .tipo(Operacao.DEPOSITO)
                 .conta(conta)
@@ -103,22 +105,25 @@ public class ContaService {
                 .agencia(dto.getAgencia())
                 .numero(dto.getNumero())
                 .nomeResponsavel(dto.getNome())
-                .dataDeCriacao(LocalDate.now())
+                .dataDeCriacao(LocalDateTime.now())
                 .saldo(0.00)
                 .build();
-    }
-
-    public Conta findByContaNumero(Integer numero) {
-        Conta conta = contaRepository.findByNumero(numero);
-        return conta;
     }
 
     public Conta findById(Long id) {
         Optional<Conta> op = contaRepository.findById(id);
         if (op.isEmpty()) {
-            throw new RuntimeException("Conta de id: " + id + " não encontrada");
+            throw new EntityNotFoundException("Conta de id: " + id + " não encontrada");
         }
 
         return op.get();
+    }
+
+    public Page<Transferencia> findByOperadorAndPeriod(Long id, LocalDateTime inicio, LocalDateTime fim, String name, Pageable pageable) {
+        return transferenciaService.findByNomeAndPeriodo(id, inicio, fim, name, pageable);
+    }
+
+    public Page<Transferencia> findByPeriodo(Long id, LocalDateTime inicio, LocalDateTime fim, Pageable pageable) {
+        return transferenciaService.findByPeriodo(id, inicio, fim, pageable);
     }
 }
