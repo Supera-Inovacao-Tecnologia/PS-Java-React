@@ -25,16 +25,31 @@ public class ContaService {
     private TransferenciaService transferenciaService;
 
 
+    /**
+     * Insert an account at database
+     * @param conta account object
+     */
     public void inserir(Conta conta) {
         contaRepository.save(conta);
     }
 
+    /**
+     * validates value before making transcations. (AccountBalance - Value) shouldn't be less than 0
+     * @param conta Account object
+     * @param valor value
+     */
     public void valida(Conta conta, double valor) {
         if (conta.getSaldo() - valor < 0) {
-            throw new SaldoInsuficienteException("Saldo deve ser maior que valor de transação!");
+            throw new SaldoInsuficienteException("(AccountBalance - Value) shouldn't be less than 0");
         }
     }
 
+    /**
+     * transfer value from a account to another. Instantiates Transferencia object and inserts at database.
+     * @param origem account sender
+     * @param destino account receiver
+     * @param valor value
+     */
     @Transactional
     public void transferir(Conta origem, Conta destino, Double valor) {
 
@@ -67,6 +82,11 @@ public class ContaService {
 
     }
 
+    /**
+     * Withdraws value from account. Instantiates Transferencia object and inserts at database.
+     * @param conta account object
+     * @param valor value
+     */
     @Transactional
     public void sacar(Conta conta, Double valor) {
         valida(conta, valor);
@@ -84,6 +104,11 @@ public class ContaService {
 
     }
 
+    /**
+     * Deposit value to account. Instantiates Transferencia object and inserts at database.
+     * @param conta account object
+     * @param valor value
+     */
     @Transactional
     public void depositar(Conta conta, Double valor) {
         conta.setSaldo(conta.getSaldo() + valor);
@@ -99,8 +124,14 @@ public class ContaService {
 
     }
 
+    /**
+     * Converts dto from account into Account object
+     * @param dto ContaDTO
+     * @return Account Object
+     */
     public Conta fromDto(ContaDTO dto) {
         return Conta.builder()
+                .id(null)
                 .email(dto.getEmail())
                 .agencia(dto.getAgencia())
                 .numero(dto.getNumero())
@@ -110,19 +141,39 @@ public class ContaService {
                 .build();
     }
 
+    /**
+     * Retrieves account object from database by id.
+     * @param id account's id
+     * @return Account Object
+     */
     public Conta findById(Long id) {
         Optional<Conta> op = contaRepository.findById(id);
         if (op.isEmpty()) {
-            throw new EntityNotFoundException("Conta de id: " + id + " não encontrada");
+            throw new EntityNotFoundException("Account with id: " + id + " not found");
         }
 
         return op.get();
     }
 
+    /**
+     * Retrieves data from Database using account id as reference filtering by period and operator's name.
+     * @param id Account id
+     * @param inicio begin period
+     * @param fim end period
+     * @param name operator's name
+     * @return Page of Transactions
+     */
     public Page<Transferencia> findByOperadorAndPeriod(Long id, LocalDateTime inicio, LocalDateTime fim, String name, Pageable pageable) {
         return transferenciaService.findByNomeAndPeriodo(id, inicio, fim, name, pageable);
     }
 
+    /**
+     * Retrieves data from Database using account id as reference filtering by period and operator's name.
+     * @param id Account id
+     * @param inicio begin period
+     * @param fim ending period
+     * @return Page of Transactions
+     */
     public Page<Transferencia> findByPeriodo(Long id, LocalDateTime inicio, LocalDateTime fim, Pageable pageable) {
         return transferenciaService.findByPeriodo(id, inicio, fim, pageable);
     }

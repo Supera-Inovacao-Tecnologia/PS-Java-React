@@ -3,15 +3,18 @@ package br.com.banco.model;
 import br.com.banco.model.enums.Operacao;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
+/**
+ * Entity representing Transactions
+ */
 @Entity
 @Table(name = "transferencia")
-@Data
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
