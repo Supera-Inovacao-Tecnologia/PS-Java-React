@@ -4,10 +4,14 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
+/**
+ * Entity representing Account
+ */
 @Entity
 @Table(name = "conta")
 @NoArgsConstructor
@@ -32,10 +36,14 @@ public class Conta {
     private Integer numero;
 
     @Column(name = "nome_responsavel")
+    @NotNull
+    @NotEmpty(message = "nome responsável não deve ser vazio")
     private String nomeResponsavel;
 
     @Column(name = "email")
     @Email
+    @NotNull
+    @NotEmpty
     private String email;
 
     @Column(name = "saldo", columnDefinition = "DECIMAL(20,2) DEFAULT 0.00")

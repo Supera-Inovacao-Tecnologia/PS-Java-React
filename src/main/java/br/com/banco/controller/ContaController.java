@@ -8,6 +8,7 @@ import br.com.banco.service.ContaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
@@ -20,9 +21,13 @@ public class ContaController {
     @Autowired
     private ContaService contaService;
 
-
+    /**
+     * receives a DTO by Application/JSON, converts to an account and inserts at database
+     * @param dto ContaDTO
+     */
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Void> cadastrar(@RequestBody ContaDTO dto) {
+
         Conta conta = contaService.fromDto(dto);
 
         contaService.inserir(conta);
@@ -30,6 +35,10 @@ public class ContaController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * @param id account id
+     * @param valor value
+     */
     @RequestMapping(method = RequestMethod.PUT, path = "/depositar/{id}/{valor}")
     public ResponseEntity<Void> depositar(@PathVariable Long id, @PathVariable Double valor) {
         Conta conta = contaService.findById(id);
@@ -39,6 +48,10 @@ public class ContaController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * @param id account
+     * @param valor value
+     */
     @RequestMapping(method = RequestMethod.PUT, path = "/sacar/{id}/{valor}")
     public ResponseEntity<Void> sacar(@PathVariable Long id, @PathVariable Double valor) {
         Conta conta = contaService.findById(id);
@@ -48,6 +61,11 @@ public class ContaController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * @param idOrigem id from account sender
+     * @param valor value to transfer
+     * @param idDestino id from account receiver
+     */
     @RequestMapping(method = RequestMethod.PUT, path = "/{idOrigem}/{valor}/{idDestino}")
     public ResponseEntity<Void> transferir(@PathVariable Long idOrigem,
                                            @PathVariable Double valor, @PathVariable Long idDestino) {
@@ -60,8 +78,16 @@ public class ContaController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping(path = "/{id}")
-    public ResponseEntity<Page<Transferencia>> getter(@PathVariable Long id,
+    /**
+     *
+     * @param id account id
+     * @param dataInicio start date period
+     * @param dataFim  end date period
+     * @param nome transactioners name
+     * @return page of transactions
+     */
+    @GetMapping(path = "/{id}/transacoes")
+    public ResponseEntity<Page<Transferencia>> getAllTransactions(@PathVariable Long id,
                                                       @RequestParam(required = false, defaultValue = "1900-01-01 00:00") String dataInicio,
                                                       @RequestParam(required = false, defaultValue = "2999-12-29 00:00") String dataFim,
                                                       @RequestParam(required = false) String nome,
@@ -78,7 +104,7 @@ public class ContaController {
 
         Page<Transferencia> page = contaService.findByOperadorAndPeriod(id, inicio, fim, nome, pageable);
 
-        return ResponseEntity.ok(page);
+        return ResponseEntity.status(HttpStatus.OK).body(page);
     }
 
 }

@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 
+/**
+ * Used exclusively to populate database
+ */
 @Service
 public class DBService {
 
@@ -20,8 +23,6 @@ public class DBService {
 
     @Bean
     public void populateDatabase() {
-
-        // usado apenas para popular o banco de dados
 
         Conta c1 = new Conta("Alice Evelyn Rezende", 1926, 1111299, "alicevelyn@gmail.com");
         Conta c2 = new Conta("Victor Carlos Eduardo da Conceição", 2697,11909463, "carlosvitor12@outlook.com");
