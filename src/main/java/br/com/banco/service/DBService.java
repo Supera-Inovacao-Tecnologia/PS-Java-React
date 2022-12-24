@@ -92,6 +92,7 @@ public class DBService {
                 .nomeOperadorTransacao(destino.getNomeResponsavel())
                 .conta(origem)
                 .valor(valor)
+                .saldoAtual(origem.getSaldo())
                 .build();
 
         Transferencia transEntrada = Transferencia.builder()
@@ -100,6 +101,7 @@ public class DBService {
                 .nomeOperadorTransacao(origem.getNomeResponsavel())
                 .conta(destino)
                 .valor(valor)
+                .saldoAtual(destino.getSaldo())
                 .build();
 
         transferenciaService.inserir(transEntrada);

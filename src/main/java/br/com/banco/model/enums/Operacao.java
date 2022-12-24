@@ -7,7 +7,8 @@ public enum Operacao {
 
     DEPOSITO(1, "Deposito"),
     SAQUE(2, "Saque"),
-    TRANSFERENCIA(3, "Transferencia");
+    TRANSFERENCIA_ENTRADA(3, "TransferenciaEntrada"),
+    TRANSFERENCIA_SAIDA(4, "TransferenciaSaida");
 
     private final int cod;
 

@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import javax.persistence.EntityNotFoundException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 /**
  * Exception handler
@@ -18,6 +19,11 @@ public class ContaControllerAdvice {
 
     @ExceptionHandler(SaldoInsuficienteException.class)
     public ResponseEntity<?> tratarErroSaldo() {
+        return ResponseEntity.badRequest().build();
+    }
+
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    public ResponseEntity<?> tratarErroDuplicataDb() {
         return ResponseEntity.badRequest().build();
     }
 

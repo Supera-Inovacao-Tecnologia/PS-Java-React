@@ -66,6 +66,7 @@ public class ContaService {
                 .tipo(Operacao.TRANSFERENCIA_SAIDA)
                 .nomeOperadorTransacao(destino.getNomeResponsavel())
                 .conta(origem)
+                .saldoAtual(origem.getSaldo())
                 .valor(valor)
                 .build();
 
@@ -74,6 +75,7 @@ public class ContaService {
                 .tipo(Operacao.TRANSFERENCIA_ENTRADA)
                 .nomeOperadorTransacao(origem.getNomeResponsavel())
                 .conta(destino)
+                .saldoAtual(destino.getSaldo())
                 .valor(valor)
                 .build();
 
@@ -99,6 +101,7 @@ public class ContaService {
                 .valor(valor)
                 .tipo(Operacao.SAQUE)
                 .conta(conta)
+                .saldoAtual(conta.getSaldo())
                 .build();
         transferenciaService.inserir(transferencia);
 
@@ -119,6 +122,7 @@ public class ContaService {
                 .valor(valor)
                 .tipo(Operacao.DEPOSITO)
                 .conta(conta)
+                .saldoAtual(conta.getSaldo())
                 .build();
         transferenciaService.inserir(transferencia);
 

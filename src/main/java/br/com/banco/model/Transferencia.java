@@ -38,6 +38,9 @@ public class Transferencia {
     @Column(name = "nome_operador_transacao")
     private String nomeOperadorTransacao;
 
+    @Column(name = "saldoAtual")
+    private Double saldoAtual;
+
     @ManyToOne
     private Conta conta;
 
