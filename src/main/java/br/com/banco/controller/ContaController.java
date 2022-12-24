@@ -7,6 +7,8 @@ import br.com.banco.service.ContaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -87,12 +89,12 @@ public class ContaController {
      * @param nome       transactioners name
      * @return page of transactions
      */
-    @GetMapping(path = "/{id}/transacoes")
+    @GetMapping(path = "/transacoes/{id}")
     public ResponseEntity<Page<Transferencia>> getAllTransactions(@PathVariable Long id,
                                                                   @RequestParam(required = false, defaultValue = "1900-01-01 00:00") String dataInicio,
                                                                   @RequestParam(required = false, defaultValue = "2999-12-29 00:00") String dataFim,
                                                                   @RequestParam(required = false) String nome,
-                                                                  Pageable pageable) {
+                                                                  @PageableDefault(size = 5, sort = "dataTransferencia", direction = Sort.Direction.DESC) Pageable pageable) {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime inicio = LocalDateTime.parse(dataInicio, formatter);

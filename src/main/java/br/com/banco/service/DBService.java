@@ -55,6 +55,7 @@ public class DBService {
                 .valor(valor)
                 .tipo(Operacao.SAQUE)
                 .conta(conta)
+                .saldoAtual(conta.getSaldo())
                 .build();
         transferenciaService.inserir(transferencia);
 
@@ -71,6 +72,7 @@ public class DBService {
                 .valor(valor)
                 .tipo(Operacao.DEPOSITO)
                 .conta(conta)
+                .saldoAtual(conta.getSaldo())
                 .build();
         transferenciaService.inserir(transferencia);
     }
