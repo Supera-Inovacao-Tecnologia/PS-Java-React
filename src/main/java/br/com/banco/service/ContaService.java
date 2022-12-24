@@ -63,7 +63,7 @@ public class ContaService {
 
         Transferencia transSaida = Transferencia.builder()
                 .dataTransferencia(LocalDateTime.now())
-                .tipo(Operacao.TRANSFERENCIA)
+                .tipo(Operacao.TRANSFERENCIA_SAIDA)
                 .nomeOperadorTransacao(destino.getNomeResponsavel())
                 .conta(origem)
                 .valor(valor)
@@ -71,7 +71,7 @@ public class ContaService {
 
         Transferencia transEntrada = Transferencia.builder()
                 .dataTransferencia(LocalDateTime.now())
-                .tipo(Operacao.TRANSFERENCIA)
+                .tipo(Operacao.TRANSFERENCIA_ENTRADA)
                 .nomeOperadorTransacao(origem.getNomeResponsavel())
                 .conta(destino)
                 .valor(valor)
