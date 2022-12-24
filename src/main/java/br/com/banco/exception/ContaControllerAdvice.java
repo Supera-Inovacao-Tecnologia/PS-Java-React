@@ -16,4 +16,9 @@ public class ContaControllerAdvice {
         return ResponseEntity.notFound().build();
     }
 
+    @ExceptionHandler(SaldoInsuficienteException.class)
+    public ResponseEntity<?> tratarErroSaldo() {
+        return ResponseEntity.badRequest().build();
+    }
+
 }

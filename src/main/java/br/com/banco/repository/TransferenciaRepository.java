@@ -36,4 +36,5 @@ public interface TransferenciaRepository extends JpaRepository<Transferencia, Lo
      */
     @Query("SELECT t FROM Transferencia t WHERE t.conta.id = :id AND t.dataTransferencia BETWEEN :inicio AND :fim")
     Page<Transferencia> findByPeriodo(Long id, LocalDateTime inicio, LocalDateTime fim, Pageable pageable);
+
 }

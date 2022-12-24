@@ -1,6 +1,5 @@
 package br.com.banco.controller;
 
-
 import br.com.banco.model.Conta;
 import br.com.banco.model.Transferencia;
 import br.com.banco.model.dto.ContaDTO;
@@ -11,10 +10,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/conta")
 public class ContaController {
 
@@ -23,9 +24,10 @@ public class ContaController {
 
     /**
      * receives a DTO by Application/JSON, converts to an account and inserts at database
+     *
      * @param dto ContaDTO
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping(path = "/cadastrar")
     public ResponseEntity<Void> cadastrar(@RequestBody ContaDTO dto) {
 
         Conta conta = contaService.fromDto(dto);
@@ -36,10 +38,10 @@ public class ContaController {
     }
 
     /**
-     * @param id account id
+     * @param id    account id
      * @param valor value
      */
-    @RequestMapping(method = RequestMethod.PUT, path = "/depositar/{id}/{valor}")
+    @PutMapping(path = "/depositar/{id}/{valor}")
     public ResponseEntity<Void> depositar(@PathVariable Long id, @PathVariable Double valor) {
         Conta conta = contaService.findById(id);
 
@@ -49,10 +51,10 @@ public class ContaController {
     }
 
     /**
-     * @param id account
+     * @param id    account
      * @param valor value
      */
-    @RequestMapping(method = RequestMethod.PUT, path = "/sacar/{id}/{valor}")
+    @PutMapping(path = "/sacar/{id}/{valor}")
     public ResponseEntity<Void> sacar(@PathVariable Long id, @PathVariable Double valor) {
         Conta conta = contaService.findById(id);
 
@@ -62,11 +64,11 @@ public class ContaController {
     }
 
     /**
-     * @param idOrigem id from account sender
-     * @param valor value to transfer
+     * @param idOrigem  id from account sender
+     * @param valor     value to transfer
      * @param idDestino id from account receiver
      */
-    @RequestMapping(method = RequestMethod.PUT, path = "/{idOrigem}/{valor}/{idDestino}")
+    @PutMapping(path = "/transferir/{idOrigem}/{valor}/{idDestino}")
     public ResponseEntity<Void> transferir(@PathVariable Long idOrigem,
                                            @PathVariable Double valor, @PathVariable Long idDestino) {
 
@@ -79,19 +81,18 @@ public class ContaController {
     }
 
     /**
-     *
-     * @param id account id
+     * @param id         account id
      * @param dataInicio start date period
-     * @param dataFim  end date period
-     * @param nome transactioners name
+     * @param dataFim    end date period
+     * @param nome       transactioners name
      * @return page of transactions
      */
     @GetMapping(path = "/{id}/transacoes")
     public ResponseEntity<Page<Transferencia>> getAllTransactions(@PathVariable Long id,
-                                                      @RequestParam(required = false, defaultValue = "1900-01-01 00:00") String dataInicio,
-                                                      @RequestParam(required = false, defaultValue = "2999-12-29 00:00") String dataFim,
-                                                      @RequestParam(required = false) String nome,
-                                                      Pageable pageable) {
+                                                                  @RequestParam(required = false, defaultValue = "1900-01-01 00:00") String dataInicio,
+                                                                  @RequestParam(required = false, defaultValue = "2999-12-29 00:00") String dataFim,
+                                                                  @RequestParam(required = false) String nome,
+                                                                  Pageable pageable) {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime inicio = LocalDateTime.parse(dataInicio, formatter);

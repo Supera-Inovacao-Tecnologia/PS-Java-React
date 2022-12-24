@@ -88,7 +88,7 @@ public class DBService {
 
         Transferencia transSaida = Transferencia.builder()
                 .dataTransferencia(LocalDateTime.of(ano, mes, dia, hora, minuto, segundo))
-                .tipo(Operacao.TRANSFERENCIA)
+                .tipo(Operacao.TRANSFERENCIA_SAIDA)
                 .nomeOperadorTransacao(destino.getNomeResponsavel())
                 .conta(origem)
                 .valor(valor)
@@ -96,7 +96,7 @@ public class DBService {
 
         Transferencia transEntrada = Transferencia.builder()
                 .dataTransferencia(LocalDateTime.of(ano, mes, dia, hora, minuto, segundo))
-                .tipo(Operacao.TRANSFERENCIA)
+                .tipo(Operacao.TRANSFERENCIA_ENTRADA)
                 .nomeOperadorTransacao(origem.getNomeResponsavel())
                 .conta(destino)
                 .valor(valor)
