@@ -11,6 +11,7 @@ import java.util.List;
 public class Conta  implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_conta")
     private long id;
 
