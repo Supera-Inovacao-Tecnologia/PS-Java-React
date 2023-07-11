@@ -11,12 +11,16 @@ import java.util.Date;
 public class Transferencia implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "data_transferencia")
     private Date dataTransferencia;
 
+    @Column(name = "valor")
     private BigDecimal valor;
 
+    @Column(name = "tipo")
     private String tipoTransferencia;
 
     private String nomeOperadorTransacao;
