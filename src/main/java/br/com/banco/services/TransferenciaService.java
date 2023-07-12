@@ -16,6 +16,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
+import static com.fasterxml.jackson.databind.type.LogicalType.DateTime;
+
 
 @Service
 public class TransferenciaService {
@@ -37,13 +39,14 @@ public class TransferenciaService {
 
         QTransferencia qTransferencia = QTransferencia.transferencia;
         BooleanBuilder filter = new BooleanBuilder();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         if(!Objects.equals(filterDataInicio, "")) {
-            filter.and(qTransferencia.dataTransferencia.gt(LocalDateTime.parse(filterDataInicio)));
+            filter.and(qTransferencia.dataTransferencia.gt(LocalDate.parse(filterDataInicio,formatter)));
         }
 
         if(!Objects.equals(filterDataFim, "")) {
-            filter.and(qTransferencia.dataTransferencia.lt(LocalDateTime.parse(filterDataFim)));
+            filter.and(qTransferencia.dataTransferencia.lt(LocalDate.parse(filterDataFim,formatter)));
         }
 
         if(!Objects.equals(filterNomeOperadorTransacao, "")) {

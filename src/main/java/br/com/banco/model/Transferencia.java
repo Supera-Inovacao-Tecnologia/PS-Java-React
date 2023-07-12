@@ -1,10 +1,14 @@
 package br.com.banco.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GeneratorType;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -15,7 +19,8 @@ public class Transferencia implements Serializable {
     private Long id;
 
     @Column(name = "data_transferencia")
-    private Date dataTransferencia;
+    @JsonFormat(pattern="dd-MM-yyyy")
+    private LocalDate dataTransferencia;
 
     @Column(name = "valor")
     private BigDecimal valor;
@@ -25,13 +30,13 @@ public class Transferencia implements Serializable {
 
     private String nomeOperadorTransacao;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "conta_id")
     private Conta conta;
 
     public Transferencia() {
     }
-
     public Long getId() {
         return id;
     }
@@ -40,11 +45,11 @@ public class Transferencia implements Serializable {
         this.id = id;
     }
 
-    public Date getDataTransferencia() {
+    public LocalDate getDataTransferencia() {
         return dataTransferencia;
     }
 
-    public void setDataTransferencia(Date dataTransferencia) {
+    public void setDataTransferencia(LocalDate dataTransferencia) {
         this.dataTransferencia = dataTransferencia;
     }
 
