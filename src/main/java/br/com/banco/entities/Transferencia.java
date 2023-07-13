@@ -44,4 +44,7 @@ public class Transferencia {
     public String getNomeOperadorTransacao() {
         return nomeOperadorTransacao;
     }
+    public String getConta() {
+        return conta.getNomeResponsavel();
+    }
 }
