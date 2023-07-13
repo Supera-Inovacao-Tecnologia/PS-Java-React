@@ -18,9 +18,11 @@ public class TransferenciaService {
       this.repository = repository;
   }
 
-  public List<Transferencia> buscarTransferencias(Integer contaId) {
+  public List<Transferencia> buscarTransferencias(Integer contaId, String nomeOperador) {
     if (contaId != null) {
       return repository.buscarTransferenciasPorConta(contaId);
+    } else if (nomeOperador != null) {
+      return repository.buscarTransferenciasPorNomeOperador(nomeOperador);
     } else {
       return repository.buscarTodasTransferencias();
     }

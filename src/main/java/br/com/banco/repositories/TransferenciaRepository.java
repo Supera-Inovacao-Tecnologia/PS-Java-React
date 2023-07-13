@@ -13,5 +13,8 @@ public interface TransferenciaRepository extends JpaRepository<Transferencia, In
 
     @Query("SELECT t FROM Transferencia t JOIN FETCH t.conta c WHERE c.idConta = :contaId")
     List<Transferencia> buscarTransferenciasPorConta(@Param("contaId") Integer contaId);
+
+    @Query("SELECT t FROM Transferencia t JOIN FETCH t.conta c WHERE t.nomeOperadorTransacao = :nomeOperador")
+    List<Transferencia> buscarTransferenciasPorNomeOperador(@Param("nomeOperador") String nomeOperador);
 }
 

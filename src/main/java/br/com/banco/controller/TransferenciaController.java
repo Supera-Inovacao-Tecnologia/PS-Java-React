@@ -23,7 +23,7 @@ public class TransferenciaController {
     }
 
     @GetMapping
-    public List<Transferencia> buscarTransferencias(@RequestParam(required = false) Integer contaId) {
-        return service.buscarTransferencias(contaId);
+    public List<Transferencia> buscarTransferencias(@RequestParam(required = false) Integer contaId, String nomeOperador) {
+        return service.buscarTransferencias(contaId, nomeOperador);
     }
 }
