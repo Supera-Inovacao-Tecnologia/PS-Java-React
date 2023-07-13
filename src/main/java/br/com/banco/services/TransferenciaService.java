@@ -11,14 +11,18 @@ import java.util.List;
 
 @Service
 public class TransferenciaService {
-    private TransferenciaRepository repository;
+  private TransferenciaRepository repository;
 
-    @Autowired
-    public TransferenciaService(TransferenciaRepository repository) {
-        this.repository = repository;
-    }
+  @Autowired
+  public TransferenciaService(TransferenciaRepository repository) {
+      this.repository = repository;
+  }
 
-    public List<Transferencia> buscarTodasTransferencias() {
-        return repository.buscarTodasTransferencias();
+  public List<Transferencia> buscarTransferencias(Integer contaId) {
+    if (contaId != null) {
+      return repository.buscarTransferenciasPorConta(contaId);
+    } else {
+      return repository.buscarTodasTransferencias();
     }
+  }
 }

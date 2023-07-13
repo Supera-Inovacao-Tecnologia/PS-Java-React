@@ -7,7 +7,6 @@ import javax.persistence.*;
 public class Conta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_conta")
     private int idConta;
 
     @Column(name = "nome_responsavel", nullable = false)
