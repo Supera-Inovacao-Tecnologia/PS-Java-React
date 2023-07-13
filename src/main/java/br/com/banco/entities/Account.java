@@ -1,4 +1,4 @@
-package br.com.entities;
+package br.com.banco.entities;
 
 public class Account {
     private int accountId;
