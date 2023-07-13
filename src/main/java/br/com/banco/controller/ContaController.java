@@ -12,7 +12,7 @@ import br.com.banco.model.Conta;
 import br.com.banco.service.ContaService;
 
 @RestController
-@RequestMapping("/api/contas")
+@RequestMapping("/contas")
 public class ContaController {
 
     @Autowired
