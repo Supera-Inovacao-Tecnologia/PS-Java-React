@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface TransferenciaRepository extends JpaRepository<Transferencia, Integer> {
@@ -19,5 +20,12 @@ public interface TransferenciaRepository extends JpaRepository<Transferencia, In
 
     @Query("SELECT t FROM Transferencia t JOIN FETCH t.conta c WHERE YEAR(t.dataTransferencia) = :ano AND MONTH(t.dataTransferencia) = :mes")
     List<Transferencia> buscarTransferenciasPorMesAno(@Param("mes") int mes, @Param("ano") int ano);
+
+    @Query("SELECT t FROM Transferencia t JOIN FETCH t.conta c WHERE t.nomeOperadorTransacao = :nomeOperador AND YEAR(t.dataTransferencia) = :ano AND MONTH(t.dataTransferencia) = :mes")
+    List<Transferencia> buscarTransferenciasPorMesAnoEoperador(
+        @Param("nomeOperador") String nomeOperador, 
+        @Param("mes") int mes,
+        @Param("ano") int ano
+    );
 }
 
