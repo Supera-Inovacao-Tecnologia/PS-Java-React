@@ -51,11 +51,11 @@ public class TransferenciaController {
             throw new ParametroDeTempoException("Você não pode passar como parâmetro apenas o mês ou o ano.");
         }
 
-        if (contaId != null && nomeOperador != null) {
+        if (contaId != null && nomeOperador != null && mes == null && ano == null) {
             throw new ParametrosInvalidosException("Você não pode passar o id da conta e o nome do operador como parâmetros. Os dois só podem ser passados em conjunto se o mês e o ano forem informados também.");
         }
 
-        if (contaId != null && mes != null && ano != null) {
+        if (contaId != null && mes != null && ano != null && nomeOperador == null) {
             throw new ParametrosInvalidosException("Você não pode passar o id da conta e o mês e o ano como parâmetros. Eles só podem ser passados em conjunto se o nome do operador for informado também.");
         }
 
