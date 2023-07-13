@@ -19,7 +19,7 @@ public class TransferenciaService {
   }
 
   public List<Transferencia> buscarTransferencias(Integer contaId, String nomeOperador, Integer mes, Integer ano) {
-    if (contaId != null && nomeOperador != null && mes != null & ano != null) {
+    if (nomeOperador != null && mes != null & ano != null) {
       return repository.buscarTransferenciasPorMesAnoEoperador(nomeOperador, mes, ano);
     } else if (contaId != null) {
       return repository.buscarTransferenciasPorConta(contaId);
