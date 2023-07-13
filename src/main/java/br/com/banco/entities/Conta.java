@@ -6,13 +6,17 @@ import javax.persistence.*;
 @Table(name = "conta")
 public class Conta {
     @Id
-    private int id_conta;
-    private String nome_responsavel;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_conta")
+    private int idConta;
 
-    public int getAccountId() {
-        return id_conta;
+    @Column(name = "nome_responsavel", nullable = false)
+    private String nomeResponsavel;
+
+    public int getIdConta() {
+        return idConta;
     }
-    public String getClientName() {
-        return nome_responsavel;
+    public String getNomeResponsavel() {
+        return nomeResponsavel;
     }
 }
