@@ -17,6 +17,8 @@ public class Conta {
         this.nomeResponsavel = nomeResponsavel;
     }
 
+    public Conta() {}
+
     public int getIdConta() {
         return idConta;
     }

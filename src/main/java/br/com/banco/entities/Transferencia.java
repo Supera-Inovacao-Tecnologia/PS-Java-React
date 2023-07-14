@@ -45,6 +45,8 @@ public class Transferencia {
         this.conta = conta;
     }
 
+    public Transferencia() {}
+
     public int getId() {
         return id;
     }
