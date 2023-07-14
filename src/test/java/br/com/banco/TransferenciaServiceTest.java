@@ -3,6 +3,7 @@ package br.com.banco;
 import br.com.banco.entities.Conta;
 import br.com.banco.entities.Transferencia;
 import br.com.banco.exception.ParametroDeTempoException;
+import br.com.banco.exception.ParametrosInvalidosException;
 import br.com.banco.repositories.TransferenciaRepository;
 import br.com.banco.services.TransferenciaService;
 
@@ -136,6 +137,13 @@ class TransferenciaServiceTest {
     public void buscarTransferencias_ApenasMesComoParametro_EsperaExcecao() {
         assertThrows(ParametroDeTempoException.class, () -> {
             service.buscarTransferencias(null, null, 01, null);
+        });
+    }
+
+    @Test
+    public void buscarTransferencias_idContaMesAnoComoParametros_EsperaExcecao() {
+        assertThrows(ParametrosInvalidosException.class, () -> {
+            service.buscarTransferencias(1, null, 01, 2023);
         });
     }
 }
