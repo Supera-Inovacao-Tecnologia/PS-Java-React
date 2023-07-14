@@ -92,7 +92,13 @@ class TransferenciaServiceTest {
 
     @Test
     public void buscarTransferencias_PorNomeOperador_DeveRetornarTransferenciasCorretas() {
-        
+        when(repository.buscarTransferenciasPorNomeOperador("Beltrano")).thenReturn(Arrays.asList(transferencia2));
+        List<Transferencia> transferencias = service.buscarTransferencias(null, "Beltrano", null, null);
+
+        assertEquals(1, transferencias.size());
+        assertEquals(transferencia2, transferencias.get(0));
+        assertEquals(transferencia2.getNomeOperadorTransacao(), transferencias.get(0).getNomeOperadorTransacao());
+        verify(repository, times(1)).buscarTransferenciasPorNomeOperador("Beltrano");
     }
 
     @Test
