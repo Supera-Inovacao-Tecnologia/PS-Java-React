@@ -4,8 +4,11 @@ import br.com.banco.entities.Conta;
 import br.com.banco.entities.Transferencia;
 import br.com.banco.repositories.TransferenciaRepository;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import java.util.List;
 
@@ -43,5 +46,14 @@ public class TransferenciaRepositoryTest {
         assertTrue(resposta.stream().anyMatch(res -> res.getTipo().contains("DEPOSITO")));
         assertTrue(resposta.stream().anyMatch(res -> res.getTipo().contains("SAQUE")));
         assertTrue(resposta.stream().anyMatch(res -> res.getTipo().contains("TRANSFERENCIA")));
+    }
+
+    @Test
+    public void testarBuscarTodasTransferenciasPorNomeOperador() {
+        List<Transferencia> resposta = repository.buscarTransferenciasPorNomeOperador("Beltrano");
+
+        assertNotNull(resposta);
+        assertEquals(resposta.get(0).getTipo(), "TRANSFERENCIA");
+        assertEquals(resposta.get(0).getNomeOperadorTransacao(), "Beltrano");
     }
 }
