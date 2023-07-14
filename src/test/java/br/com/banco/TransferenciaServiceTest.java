@@ -131,4 +131,11 @@ class TransferenciaServiceTest {
             service.buscarTransferencias(null, null, null, 2023);
         });
     }
+
+    @Test
+    public void buscarTransferencias_ApenasMesComoParametro_EsperaExcecao() {
+        assertThrows(ParametroDeTempoException.class, () -> {
+            service.buscarTransferencias(null, null, 01, null);
+        });
+    }
 }
