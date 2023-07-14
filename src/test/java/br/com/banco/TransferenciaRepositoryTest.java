@@ -64,4 +64,14 @@ public class TransferenciaRepositoryTest {
         List<Transferencia> resposta2 = repository.buscarTransferenciasPorMesAno(3, 2023);
         assertNotNull(resposta2);
     }
+
+    @Test
+    public void testarBuscarTransferenciasPorNomeOperadorMesAno() {
+        List<Transferencia> resposta = repository.buscarTransferenciasPorMesAnoEoperador("Beltrano", 6, 2020);
+        assertNotNull(resposta);
+        assertEquals(resposta.get(0).getNomeOperadorTransacao(), "Beltrano");
+
+        List<Transferencia> resposta2 = repository.buscarTransferenciasPorMesAnoEoperador("Beltrano", 6, 2023);
+        assertEquals(0, resposta2.size());
+    }
 }
