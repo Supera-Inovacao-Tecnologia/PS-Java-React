@@ -103,6 +103,12 @@ class TransferenciaServiceTest {
 
     @Test
     public void buscarTransferencias_PorNomeOperadorEMesAno_DeveRetornarTransferenciasCorretas() {
-        
+        when(repository.buscarTransferenciasPorMesAnoEoperador("Beltrano", 01, 2023)).thenReturn(Arrays.asList(transferencia2));
+        List<Transferencia> transferencias = service.buscarTransferencias(null, "Beltrano", 01, 2023);
+
+        assertEquals(1, transferencias.size());
+        assertEquals(transferencia2, transferencias.get(0));
+        assertEquals(transferencia2.getNomeOperadorTransacao(), transferencias.get(0).getNomeOperadorTransacao());
+        verify(repository, times(1)).buscarTransferenciasPorMesAnoEoperador("Beltrano", 01, 2023);
     }
 }
