@@ -146,4 +146,11 @@ class TransferenciaServiceTest {
             service.buscarTransferencias(1, null, 01, 2023);
         });
     }
+
+    @Test
+    public void buscarTransferencias_idContaNomeOperadorComoParametros_EsperaExcecao() {
+        assertThrows(ParametrosInvalidosException.class, () -> {
+            service.buscarTransferencias(1, "Beltrano", null, null);
+        });
+    }
 }
