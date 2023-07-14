@@ -14,9 +14,9 @@ CREATE TABLE transferencia
     nome_operador_transacao VARCHAR (50),
     conta_id INT NOT NULL,
 
-        CONSTRAINT FK_CONTA
+    CONSTRAINT FK_CONTA
         FOREIGN KEY (conta_id)
-        REFERENCES conta(id_conta)
+            REFERENCES conta(id_conta)
 );
 
 INSERT INTO conta (id_conta, nome_responsavel) VALUES (1,'Fulano');
