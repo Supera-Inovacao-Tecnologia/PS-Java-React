@@ -1,7 +1,6 @@
 package br.com.banco.services;
 
 import br.com.banco.entities.Transferencia;
-import br.com.banco.exception.FiltroNaoEncontradoException;
 import br.com.banco.exception.ParametroDeTempoException;
 import br.com.banco.exception.ParametrosInvalidosException;
 import br.com.banco.repositories.TransferenciaRepository;
