@@ -55,4 +55,13 @@ public class TransferenciaRepositoryTest {
         assertEquals(resposta.get(0).getTipo(), "TRANSFERENCIA");
         assertEquals(resposta.get(0).getNomeOperadorTransacao(), "Beltrano");
     }
+
+    @Test
+    public void testarBuscarTransferenciasPorMesAno() {
+        List<Transferencia> resposta = repository.buscarTransferenciasPorMesAno(2, 2020);
+        assertEquals(0, resposta.size());
+
+        List<Transferencia> resposta2 = repository.buscarTransferenciasPorMesAno(3, 2023);
+        assertNotNull(resposta2);
+    }
 }
