@@ -2,10 +2,12 @@ package br.com.banco;
 
 import br.com.banco.entities.Conta;
 import br.com.banco.entities.Transferencia;
+import br.com.banco.exception.ParametroDeTempoException;
 import br.com.banco.repositories.TransferenciaRepository;
 import br.com.banco.services.TransferenciaService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -121,5 +123,12 @@ class TransferenciaServiceTest {
         assertEquals(transferencia2, transferencias.get(0));
         assertEquals(transferencia2.getNomeOperadorTransacao(), transferencias.get(0).getNomeOperadorTransacao());
         verify(repository, times(1)).buscarTransferenciasPorMesAnoEoperador("Beltrano", 01, 2023);
+    }
+
+    @Test
+    public void buscarTransferencias_ApenasAnoComoParametro_EsperaExcecao() {
+        assertThrows(ParametroDeTempoException.class, () -> {
+            service.buscarTransferencias(null, null, null, 2023);
+        });
     }
 }
