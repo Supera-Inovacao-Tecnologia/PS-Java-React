@@ -81,7 +81,13 @@ class TransferenciaServiceTest {
 
     @Test
     public void buscarTransferencias_PorMesAno_DeveRetornarTransferenciasCorretas() {
-        
+        when(repository.buscarTransferenciasPorMesAno(01, 2023)).thenReturn(transferenciasEsperadas);
+        List<Transferencia> transferencias = service.buscarTransferencias(null, null, 01, 2023);
+
+        assertEquals(2, transferencias.size());
+        assertEquals(transferencia1, transferencias.get(0));
+        assertEquals(transferencia2, transferencias.get(1));
+        verify(repository, times(1)).buscarTransferenciasPorMesAno(01, 2023);
     }
 
     @Test
