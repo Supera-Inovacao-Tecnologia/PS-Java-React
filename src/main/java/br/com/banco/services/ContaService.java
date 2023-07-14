@@ -1,6 +1,7 @@
 package br.com.banco.services;
 
 import br.com.banco.models.Conta;
+import br.com.banco.models.Transferencia;
 import br.com.banco.repositorys.ContaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,6 @@ public class ContaService {
         return contaRepository.save(conta);
     }
 
-    public List<Conta> findAllConta(){
-        return contaRepository.findAll();
-    }
+
+
 }
