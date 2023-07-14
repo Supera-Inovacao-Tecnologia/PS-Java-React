@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,19 +20,29 @@ public class TransferenciaService {
     private TrasnferenciaRepository trasnferenciaRepository;
 
     public List<Transferencia> findAllTransferencia() {
-
         return trasnferenciaRepository.findAll();
     }
 
     @Transactional
     public Transferencia saveTransferencia(Transferencia transferencia) {
-        if (transferencia.getNomeOperadorTransacao() == null){
-            transferencia.getConta().getNomeResponsavel();
-        }
         return trasnferenciaRepository.save(transferencia);
     }
 
-    public Optional<Transferencia> findByIdTransferencia(Long id) {
-       return trasnferenciaRepository.findById(id);
+    public List<Transferencia> getAllTransferencias() {
+        return trasnferenciaRepository.findAll();
+    }
+
+    public List<Transferencia> getTransferenciasBetweenDates(LocalDateTime dataInicio, LocalDateTime dataFim) {
+        return trasnferenciaRepository.findByDataTransferenciaBetween(dataInicio, dataFim);
+    }
+
+    public List<Transferencia> getTransferenciasOperador(String operadorName) {
+        return trasnferenciaRepository.findByNomeOperadorTransacao(operadorName);
+    }
+
+    public List<Transferencia> getTransferenciaWhitAllFilters
+            (LocalDateTime dataInicio, LocalDateTime dataFim, String operadorNome){
+        return trasnferenciaRepository
+                .findByDataTransferenciaBetweenAndNomeOperadorTransacao(dataInicio, dataFim, operadorNome);
     }
 }
