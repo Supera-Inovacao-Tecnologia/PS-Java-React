@@ -22,7 +22,7 @@ public interface TransferenciaRepository extends JpaRepository<Transferencia, In
 
     @Query("SELECT t FROM Transferencia t JOIN FETCH t.conta c WHERE t.nomeOperadorTransacao = :nomeOperador AND YEAR(t.dataTransferencia) = :ano AND MONTH(t.dataTransferencia) = :mes")
     List<Transferencia> buscarTransferenciasPorMesAnoEoperador(
-        @Param("nomeOperador") String nomeOperador, 
+        @Param("nomeOperador") String nomeOperador,
         @Param("mes") int mes,
         @Param("ano") int ano
     );
