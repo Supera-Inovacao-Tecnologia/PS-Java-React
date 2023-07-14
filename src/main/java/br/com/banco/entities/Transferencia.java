@@ -25,9 +25,6 @@ public class Transferencia {
     @Column(name = "nome_operador_transacao")
     private String nomeOperadorTransacao;
 
-    @Column(name = "conta_id")
-    private int contaId;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "conta_id", nullable = false)
     private Conta conta;
@@ -38,7 +35,6 @@ public class Transferencia {
         double valor, 
         String tipo, 
         String nomeOperadorTransacao, 
-        int contaId, 
         Conta conta
     ) {
         this.id = id;
@@ -46,7 +42,6 @@ public class Transferencia {
         this.valor = valor;
         this.tipo = tipo;
         this.nomeOperadorTransacao = nomeOperadorTransacao;
-        this.contaId = contaId;
         this.conta = conta;
     }
 
