@@ -5,10 +5,10 @@ import br.com.banco.entities.Transferencia;
 import br.com.banco.repositories.TransferenciaRepository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 import java.util.List;
 
@@ -33,19 +33,18 @@ public class TransferenciaRepositoryTest {
         List<Transferencia> resposta = repository.buscarTodasTransferencias();
 
         assertNotNull(resposta);
-        assertTrue(resposta.stream().anyMatch(res -> res.getTipo().contains("DEPOSITO")));
-        assertTrue(resposta.stream().anyMatch(res -> res.getTipo().contains("SAQUE")));
-        assertTrue(resposta.stream().anyMatch(res -> res.getTipo().contains("TRANSFERENCIA")));
+        assertEquals(resposta.get(0).getId(), 1);
     }
 
     @Test
     public void testarBuscarTodasTransferenciasPorIdConta() {
         List<Transferencia> resposta = repository.buscarTransferenciasPorConta(1);
-
+        List<Transferencia> resposta2 = repository.buscarTransferenciasPorConta(2);
+  
         assertNotNull(resposta);
-        assertTrue(resposta.stream().anyMatch(res -> res.getTipo().contains("DEPOSITO")));
-        assertTrue(resposta.stream().anyMatch(res -> res.getTipo().contains("SAQUE")));
-        assertTrue(resposta.stream().anyMatch(res -> res.getTipo().contains("TRANSFERENCIA")));
+        assertEquals(resposta.get(0).getId(), 1);
+        assertNotNull(resposta2);
+        assertNotEquals(resposta2.get(0).getId(), 1);
     }
 
     @Test
