@@ -1,8 +1,6 @@
 package br.com.banco.entities;
 
-import java.math.BigDecimal;
 import java.sql.Timestamp;
-
 import javax.persistence.*;
 
 @Entity
