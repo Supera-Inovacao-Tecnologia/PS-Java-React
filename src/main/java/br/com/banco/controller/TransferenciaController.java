@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/transferencias")
@@ -29,9 +28,8 @@ public class TransferenciaController {
         @RequestParam(required = false) Integer contaId, 
         @RequestParam(required = false) String nomeOperador,
         @RequestParam(required = false) @DateTimeFormat(pattern = "MM") Integer mes,
-        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy") Integer ano,
-        HttpServletRequest request
+        @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy") Integer ano
     ) {
-        return service.buscarTransferencias(contaId, nomeOperador, mes, ano, request);
+        return service.buscarTransferencias(contaId, nomeOperador, mes, ano);
     }
 }

@@ -23,18 +23,9 @@ public class TransferenciaService {
   }
 
   public List<Transferencia> buscarTransferencias(
-    Integer contaId, String nomeOperador, Integer mes, Integer ano, HttpServletRequest request
+    Integer contaId, String nomeOperador, Integer mes, Integer ano
   ) {
-
-    List<String> parametrosEsperados = Arrays.asList("contaId", "nomeOperador", "mes", "ano");
-    List<String> parametrosRecebidos = Collections.list(request.getParameterNames());
     
-    parametrosRecebidos.removeAll(parametrosEsperados);
-
-    if (!parametrosRecebidos.isEmpty()) {
-        throw new FiltroNaoEncontradoException("Parâmetros inválidos fornecidos na requisição: " + parametrosRecebidos);
-    }
-
     if ((mes == null && ano != null) || mes != null && ano == null) {
         throw new ParametroDeTempoException("Você não pode passar como parâmetro apenas o mês ou o ano.");
     }
