@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,8 +27,8 @@ public class StatementService {
     }
 
     public StatementDTO getStatement(Long accountId,
-                                     LocalDateTime startDate,
-                                     LocalDateTime endDate,
+                                     LocalDate startDate,
+                                     LocalDate endDate,
                                      String operatorName) {
         Account account = accountService.getAccountById(accountId);
 
@@ -46,11 +48,11 @@ public class StatementService {
 
 
     private List<Transfer> filterTransfers(List<Transfer> transfers,
-                                           LocalDateTime startDate,
-                                           LocalDateTime endDate,
+                                           LocalDate startDate,
+                                           LocalDate endDate,
                                            String operatorName) {
         return transfers.stream()
-                .filter(transfer -> isWithinDateRage(transfer, startDate, endDate))
+                .filter(transfer -> isWithinDateRange(transfer, startDate, endDate))
                 .filter(transfer -> hasMatchingOperatorName(transfer, operatorName))
                 .collect(Collectors.toList());
     }
@@ -68,15 +70,22 @@ public class StatementService {
         return balance;
     }
 
-    private boolean isWithinDateRage(Transfer transfer, LocalDateTime startDate, LocalDateTime endDate) {
-        if (startDate != null && transfer.getTransferDate().isBefore(startDate)) {
+    private boolean isWithinDateRange(Transfer transfer, LocalDate startDate, LocalDate endDate) {
+        LocalDateTime transferDateTime = transfer.getTransferDate();
+
+        if (startDate != null && transferDateTime.isBefore(startDate.atStartOfDay())) {
             return false;
         }
-        return endDate == null || !transfer.getTransferDate().isAfter(endDate);
+
+        if (endDate != null && transferDateTime.isAfter(endDate.atTime(LocalTime.MAX))) {
+            return false;
+        }
+
+        return true;
     }
 
     private boolean hasMatchingOperatorName(Transfer transfer, String transferOperatorName) {
-        if (transferOperatorName != null) {
+        if (transferOperatorName != null && !transferOperatorName.isBlank()) {
             String operatorName = transfer.getOperatorName();
             return operatorName != null && operatorName.equals(transferOperatorName);
         }
