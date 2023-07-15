@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-public interface TrasnferenciaRepository extends JpaRepository<Transferencia, Long> {
+public interface TransferenciaRepository extends JpaRepository<Transferencia, Long> {
 
     List<Transferencia>findByNomeOperadorTransacao(String nomeOperadorTransacao);
 
@@ -22,4 +22,6 @@ public interface TrasnferenciaRepository extends JpaRepository<Transferencia, Lo
 //    @Query("SELECT t FROM Transferencia t WHERE t.dataTransferencia >= :startDate AND t.dataTransferencia <= :endDate")
 //    List<Transferencia> findByPeriodo(LocalDateTime startDate, LocalDateTime endDate);
 
+
+    List<Transferencia> findByContaNumeroConta(String numeroConta);
 }
