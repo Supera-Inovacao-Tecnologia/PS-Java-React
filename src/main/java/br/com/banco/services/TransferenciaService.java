@@ -15,6 +15,9 @@ public class TransferenciaService {
     @Autowired
     private TransferenciaRepository transferenciaRepository;
 
+    public TransferenciaService(TransferenciaRepository transferenciaRepository) {
+    }
+
     public List<Transferencia> findAllTransferencia() {
         return transferenciaRepository.findAll();
     }
