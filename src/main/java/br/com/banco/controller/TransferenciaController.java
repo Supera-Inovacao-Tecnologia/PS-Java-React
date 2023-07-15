@@ -1,12 +1,10 @@
 package br.com.banco.controller;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,15 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.banco.model.Transferencia;
 import br.com.banco.service.TransferenciaService;
 
+@Controller
 @RestController
 @RequestMapping("/api/transferencias")
+@CrossOrigin
 public class TransferenciaController {
     
     @Autowired
     private TransferenciaService transferenciaService;
     
     @GetMapping
-    public Page<Transferencia> getAllCars(
+    public Page<Transferencia> getTransferencias(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "4") int size
     ) {
