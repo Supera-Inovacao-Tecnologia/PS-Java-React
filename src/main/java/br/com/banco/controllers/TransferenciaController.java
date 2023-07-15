@@ -30,7 +30,7 @@ public class TransferenciaController {
             @RequestParam(value = "dataInicio", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateOne,
             @RequestParam(value = "dataFim", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateTwo,
             @RequestParam(value = "nomeOperadorTransacao", required = false) String nome,
-            @RequestParam(value = "numeroConta", required = false) String numeroConta) {
+            @RequestParam(value = "numeroConta", required = false) Long numeroConta) {
 
         List<Transferencia> transferencias;
 

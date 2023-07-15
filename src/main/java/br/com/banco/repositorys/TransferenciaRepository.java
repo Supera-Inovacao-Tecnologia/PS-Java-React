@@ -23,5 +23,5 @@ public interface TransferenciaRepository extends JpaRepository<Transferencia, Lo
 //    List<Transferencia> findByPeriodo(LocalDateTime startDate, LocalDateTime endDate);
 
 
-    List<Transferencia> findByContaNumeroConta(String numeroConta);
+    List<Transferencia> findByContaIdConta(Long idConta);
 }

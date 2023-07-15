@@ -42,7 +42,7 @@ public class TransferenciaService {
                 .findByDataTransferenciaBetweenAndNomeOperadorTransacao(dataInicio, dataFim, operadorNome);
     }
 
-    public List<Transferencia> getTransferenciasByNumeroConta(String numeroConta) {
-        return transferenciaRepository.findByContaNumeroConta(numeroConta);
+    public List<Transferencia> getTransferenciasByNumeroConta(Long numeroConta) {
+        return transferenciaRepository.findByContaIdConta(numeroConta);
     }
 }
