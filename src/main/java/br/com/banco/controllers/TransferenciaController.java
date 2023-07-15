@@ -22,8 +22,6 @@ public class TransferenciaController {
 
     @Autowired
     private TransferenciaService transferenciaService;
-    @Autowired
-    private ContaService contaService;
 
     @GetMapping("/buscarTransferencias")
     public ResponseEntity<List<Transferencia>> getAllTransferencia(
@@ -33,7 +31,6 @@ public class TransferenciaController {
             @RequestParam(value = "numeroConta", required = false) Long numeroConta) {
 
         List<Transferencia> transferencias;
-
         if (numeroConta != null) {
             transferencias = transferenciaService.getTransferenciasByNumeroConta(numeroConta);
         } else if (dateOne == null && dateTwo == null && nome == null) {
@@ -49,8 +46,6 @@ public class TransferenciaController {
             LocalDateTime dateTimeTwo = dateTwo != null ? dateTwo.atStartOfDay() : LocalDateTime.MAX;
             transferencias = transferenciaService.getTransferenciaWhitAllFilters(dateTimeOne, dateTimeTwo, nome);
         }
-
-
         return ResponseEntity.ok(transferencias);
     }
 }
