@@ -15,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,7 @@ class StatementServiceTest {
         Transfer transfer2 = Transfer.builder()
                 .id(2L)
                 .transferDate(LocalDateTime.of(2023, 6, 1, 15, 30))
-                .value(BigDecimal.valueOf(100))
+                .value(BigDecimal.valueOf(-100))
                 .operatorName("Sicrano")
                 .type(TransferType.TRANSFERENCIA)
                 .account(mockAccount)
@@ -60,7 +61,7 @@ class StatementServiceTest {
         Transfer transfer3 = Transfer.builder()
                 .id(3L)
                 .transferDate(LocalDateTime.of(2023, 7, 1, 8, 0))
-                .value(BigDecimal.valueOf(200))
+                .value(BigDecimal.valueOf(-200))
                 .operatorName(null)
                 .type(TransferType.SAQUE)
                 .account(mockAccount)
@@ -89,8 +90,8 @@ class StatementServiceTest {
     @Test
     void getStatement_WhenStartDateEndDateAndOperatorNameProvided_ReturnsStatementWithFilteredTransfers() {
         // Arrange
-        LocalDateTime startDate = LocalDateTime.of(2023, 6, 1, 0, 0);
-        LocalDateTime endDate = LocalDateTime.of(2023, 6, 30, 23, 59);
+        LocalDate startDate = LocalDate.of(2023, 6, 1);
+        LocalDate endDate = LocalDate.of(2023, 6, 30);
         String operatorName = "Sicrano";
         setupMocks(mockTransfers);
 
@@ -105,8 +106,8 @@ class StatementServiceTest {
     @Test
     void getStatement_WhenNoMatchingTransfers_ReturnsEmptyStatement() {
         // Arrange
-        LocalDateTime startDate = LocalDateTime.of(2023, 3, 1, 0, 0);
-        LocalDateTime endDate = LocalDateTime.of(2023, 4, 30, 23, 59);
+        LocalDate startDate = LocalDate.of(2023, 3, 1);
+        LocalDate endDate = LocalDate.of(2023, 4, 30);
         String operatorName = "Sicrano";
         setupMocks(mockTransfers);
 

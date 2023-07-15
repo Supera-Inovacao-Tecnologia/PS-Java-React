@@ -4,7 +4,6 @@ import br.com.banco.dto.StatementDTO;
 import br.com.banco.model.Account;
 import br.com.banco.model.Transfer;
 import br.com.banco.repository.TransferRepository;
-import br.com.banco.utils.TransferType;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -12,7 +11,6 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,8 +33,8 @@ public class StatementService {
         List<Transfer> transfers = transferRepository.findByAccountOrOperatorName(account, account.getOwner());
         List<Transfer> filteredTransfers = filterTransfers(transfers, startDate, endDate, operatorName);
 
-        BigDecimal totalBalance = calculateBalance(transfers, account);
-        BigDecimal balanceInPeriod = calculateBalance(filteredTransfers, account);
+        BigDecimal totalBalance = calculateBalance(transfers);
+        BigDecimal balanceInPeriod = calculateBalance(filteredTransfers);
 
         return StatementDTO.builder()
                 .accountOwner(account.getOwner())
@@ -57,17 +55,10 @@ public class StatementService {
                 .collect(Collectors.toList());
     }
 
-    private BigDecimal calculateBalance(List<Transfer> transfers, Account account) {
-        EnumSet<TransferType> typesToSubtract = EnumSet.of(TransferType.SAQUE, TransferType.TRANSFERENCIA);
-        BigDecimal balance = BigDecimal.ZERO;
-        for (Transfer transfer : transfers) {
-            if (typesToSubtract.contains(transfer.getType()) && transfer.getAccount().equals(account)) {
-                balance = balance.subtract(transfer.getValue());
-            } else {
-                balance = balance.add(transfer.getValue());
-            }
-        }
-        return balance;
+    private BigDecimal calculateBalance(List<Transfer> transfers) {
+        return transfers.stream()
+                .map(Transfer::getValue)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     private boolean isWithinDateRange(Transfer transfer, LocalDate startDate, LocalDate endDate) {
