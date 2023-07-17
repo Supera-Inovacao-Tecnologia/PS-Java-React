@@ -6,7 +6,6 @@ import br.com.banco.domain.entity.Transferencia;
 import br.com.banco.domain.filter.ExtratoFilter;
 import br.com.banco.repository.ContaRepository;
 import br.com.banco.repository.TransferenciaCustomRepository;
-import br.com.banco.repository.TransferenciaRepository;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ContaService {
 
-    private final TransferenciaRepository transferenciaRepository;
     private final TransferenciaCustomRepository transferenciaCustomRepository;
     private final ContaRepository contaRepository;
     public ExtratoDTO emitirExtratoBancario(Long idConta, ExtratoFilter filtro){

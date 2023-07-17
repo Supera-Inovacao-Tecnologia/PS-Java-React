@@ -1,8 +1,6 @@
 package br.com.banco.controllers;
 
-import br.com.banco.domain.entity.Conta;
 import br.com.banco.domain.filter.ExtratoFilter;
-import br.com.banco.repository.TransferenciaRepository;
 import br.com.banco.service.ContaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
