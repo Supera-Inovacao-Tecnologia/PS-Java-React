@@ -47,7 +47,7 @@ public class TransferenciaCustomRepository {
             query.setParameter("dataFim", filtro.getDataFim());
         }
 
-        if (filtro.getDataInicio() != null) {
+        if (filtro.getOperadorTransacionado() != null) {
             query.setParameter("operadorTransacao", filtro.getOperadorTransacionado());
         }
 

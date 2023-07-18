@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/conta")
+@CrossOrigin("*")
 public class ContaController {
 
     private final ContaService contaService;
