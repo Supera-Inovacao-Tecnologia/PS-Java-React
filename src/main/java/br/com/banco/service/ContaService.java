@@ -1,6 +1,7 @@
 package br.com.banco.service;
 
 import br.com.banco.domain.dto.ExtratoDTO;
+import br.com.banco.domain.dto.TransferenciaDTO;
 import br.com.banco.domain.entity.Conta;
 import br.com.banco.domain.entity.Transferencia;
 import br.com.banco.domain.filter.ExtratoFilter;
@@ -11,6 +12,7 @@ import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +30,7 @@ public class ContaService {
 
         extrato.setSaldoTotal(transferenciaCustomRepository.buscarSaldoTotalPorConta(conta.getIdConta()));
         extrato.setSaldoPeriodo(calcularSaldoPeriodo(transferencias));
-        extrato.setTransferencias(transferencias);
+        extrato.setTransferencias(transferencias.stream().map(TransferenciaDTO::toDTO).collect(Collectors.toList()));
         return extrato;
 
     }

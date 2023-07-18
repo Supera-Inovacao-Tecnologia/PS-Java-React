@@ -12,5 +12,5 @@ public class ExtratoDTO {
     private Double saldoTotal;
     @JsonProperty("saldo_periodo")
     private Double saldoPeriodo;
-    private List<Transferencia> transferencias;
+    private List<TransferenciaDTO> transferencias;
 }
